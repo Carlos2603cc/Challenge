@@ -1,0 +1,69 @@
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+
+    maven { url "https://maven.springframework.org/release" }
+    maven { url "https://maven.restlet.com"  }
+}
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2"
+        }
+
+    }
+    ext {
+        serenityCoreVersion = '3.3.2'
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:3.3.2")
+        classpath("net.serenity-bdd:serenity-single-page-report:3.3.2")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: "net.serenity-bdd.serenity-gradle-plugin"
+
+dependencies {
+    implementation group: 'net.serenity-bdd', name: 'serenity-core', version: serenityCoreVersion
+    implementation group: 'net.serenity-bdd', name: 'serenity-junit', version: serenityCoreVersion
+    implementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: serenityCoreVersion
+    implementation group: 'net.serenity-bdd', name: 'serenity-screenplay-webdriver', version: serenityCoreVersion
+    implementation group: 'net.serenity-bdd', name: 'serenity-screenplay', version: serenityCoreVersion
+    implementation group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: serenityCoreVersion
+    implementation "net.serenity-bdd:serenity-screenplay-rest:${serenityCoreVersion}"
+    implementation "io.appium:java-client:7.5.1"
+    implementation 'org.seleniumhq.selenium:selenium-java:4.1.0'
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+    testImplementation 'io.rest-assured:json-schema-validator:5.3.0'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation group: 'io.cucumber', name: 'cucumber-core', version: '7.11.1'
+}
+
+
+
+test {
+    systemProperty "file.encoding", "ISO-8859-1"
+    enableAssertions = true
+    systemProperty 'tags', System.getProperty('tags', '')
+    systemProperty 'environment', System.getProperty('environment', '')
+}
+
+serenity {
+    reports = ['single-page-html','json-summary']
+}
+wrapper {
+    gradleVersion = "8.0.2"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+
+gradle.startParameter.continueOnFailure = true
+test.finalizedBy(aggregate)
