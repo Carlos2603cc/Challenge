@@ -1,5 +1,5 @@
 # Chanllenge 🦾
-This project is the automation for the SwagLabs mobile application, based on the Screenplay Pattern.
+This project is the automation for the SwagLabs mobile application and for the Reqres API , based on the Screenplay Pattern.
 
 ## Built with 🛠️
 * JDK 16.0.2
