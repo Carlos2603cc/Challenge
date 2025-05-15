@@ -6,6 +6,7 @@ This project is the automation for the SwagLabs mobile application and for the R
 * Gradle
 * Serenity
 * Appium
+* RestAssured
 * JSON Schema Validator
 * Cucumber
 
